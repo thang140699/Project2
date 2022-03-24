@@ -1,0 +1,103 @@
+create table nhanvien(
+idNhanVien int AUTO_INCREMENT not null primary key,
+maNV varchar(25) not null,
+tenNV varchar(25) not null,
+ngaythangnamsinh date not null,
+tocongtac varchar(25) not null,
+chucvu varchar(25) not null
+);
+
+create table users(
+idUser int AUTO_INCREMENT not null primary key,
+tendangnhap varchar(25) not null,
+matkhau varchar(25) not null,
+quyen bit not null,
+NV_id int not null,
+anhien  bit not null,
+foreign key (NV_id) references nhanvien(idNhanVien)
+);
+
+
+create table khachhang(
+idKhachHang int AUTO_INCREMENT not null primary key,
+bsx varchar(25) not null,
+model varchar(25) not null,
+tenKH varchar(25) not null,
+sdtKH varchar(25) not null
+);
+
+create table nvl
+(
+idNVL int AUTO_INCREMENT not null primary key,
+maNVL varchar(25) not null,
+tenNVL varchar(25) not null,
+vitrikho varchar(25) not null,
+donvitinh varchar(25) not null,
+soluong double not null,
+gianhap double not null,
+giaxuat double not null,
+ghichu varchar(25) not null,
+tentp1 varchar(25) not null,
+khoiluongtp1 bigint not null,
+tentp2 varchar(25) not null,
+khoiluongtp2 bigint not null,
+tentp3 varchar(25) not null,
+khoiluongtp3 bigint not null,
+tentp4 varchar(25) not null,
+khoiluongtp4 bigint not null,
+tentp5 varchar(25) not null,
+khoiluongtp5 bigint not null
+);
+
+create table nhapkho
+(
+	idNhapKho int AUTO_INCREMENT not null primary key,
+	NV_id int not null,
+	maNhapKho varchar (25) not null,
+	trangthai varchar (25) not null,
+    	ngaynhap date NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	tongtien bigint not null,
+	foreign key (NV_id) references nhanvien(idNhanVien) 
+);
+
+
+create table chitietnhapkho
+(
+	idChiTietNhapKho int AUTO_INCREMENT not null primary key ,
+   	NhapKho_id int not null,
+	NVL_id int not null,
+   	soluongnhap bigint not null,
+	foreign key (NVL_id) references nvl(idNVL),
+	foreign key (NhapKho_id) references nhapkho(idNhapKho)
+);
+
+create table xuatkho
+(
+	idXuatKho int AUTO_INCREMENT not null primary key,
+	NV_id1 int not null,
+	NV_id2 int not null,
+   	KH_id int not null,
+	maXuatKho varchar (25) not null,
+	tiencong bigint not null,
+	tongtien bigint not null,
+	trangthai varchar (25) not null,
+   	ngayxuat date NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	lydoxuat varchar(250) not null,
+	tongchiphi bigint not null,
+	foreign key (NV_id1) references nhanvien(idNhanVien),
+	foreign key (NV_id2) references nhanvien(idNhanVien),
+	foreign key (KH_id) references khachhang(idKhachHang)
+
+);
+
+create table chitietxuatkho
+(
+	idChiTietXuatKho int AUTO_INCREMENT not null primary key ,
+        XuatKho_id int not null,
+	NVL_id int not null,
+        soluongxuat bigint not null,
+	foreign key (NVL_id) references nvl(idNVL),
+	foreign key (XuatKho_id) references xuatkho(idXuatKho)
+);
+
+
